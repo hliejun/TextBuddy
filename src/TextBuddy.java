@@ -56,12 +56,11 @@ import java.util.Scanner;
  *
  * @author Huang Lie Jun (A0123994W)
  * 
- * Assumptions:
- * 1) Adding of empty string to file is not allowed.
- * 2) Results of sorting will not be stored into text file.
- * 3) Results of searching will not be stored into text file.
- * 4) Search is cap-sensitive.
- * 5) Search will return all lines that contain matching substring(s).
+ *         Assumptions: 1) Adding of empty string to file is not allowed. 2)
+ *         Results of sorting will not be stored into text file. 3) Results of
+ *         searching will not be stored into text file. 4) Search is
+ *         cap-sensitive. 5) Search will return all lines that contain matching
+ *         substring(s).
  * 
  */
 public class TextBuddy {
@@ -125,9 +124,9 @@ public class TextBuddy {
     private FileOutputStream tempOutFile;
     private PrintWriter tempWriter;
 
-    /****************************/
+    /*********************/
     /* * KEY FUNCTIONS * */
-    /****************************/
+    /*********************/
 
     /**
      * The constructor that initializes file variables.
@@ -323,6 +322,7 @@ public class TextBuddy {
             String[] lines = readFileIntoLines();
             int lineToDelete = Integer.parseInt(remainingCommand);
 
+            // Line number out of range
             if (lineToDelete > lines.length || lineToDelete < 1) {
                 return String.format(MESSAGE_DELETE_RANGE_ERROR, lineToDelete, file);
             }
@@ -351,7 +351,7 @@ public class TextBuddy {
     public String clear() {
         try {
             createEmptyForOverwrite();
-
+            
             return overwriteWithEmptyFile();
         } catch (IOException ioException) {
             return String.format(MESSAGE_CLEAR_ERROR, file);
@@ -404,7 +404,8 @@ public class TextBuddy {
                     searchResults.add(lines[i]);
                 }
             }
-
+            
+            // No results
             if (searchResults.size() == 0) {
                 feedback = String.format(MESSAGE_SEARCH_EMPTY, remainingCommand);
             } else {
@@ -533,7 +534,8 @@ public class TextBuddy {
     private String getLineFeedback(String[] lines, int lineNumber) {
         String currentLine = lines[lineNumber - 1];
         String lineFeedback = String.format(MESSAGE_DISPLAY_LINE_FEEDBACK, lineNumber, currentLine);
-
+        
+        // Skip appending target line to feedback
         if (lineNumber != lines.length) {
             lineFeedback += LINE_BREAK;
         }
@@ -648,6 +650,7 @@ public class TextBuddy {
      */
     private void writeToTemporaryFile(String[] lines, int lineToDelete) {
         for (int i = 1; i <= lines.length; ++i) {
+            // Skip and do not copy target line
             if (i == lineToDelete) {
                 continue;
             }
