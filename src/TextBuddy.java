@@ -373,11 +373,12 @@ public class TextBuddy {
     }
 
     /*
-     * This operation searches the list in the file and returns lines containing the search term as substring.
+     * This operation searches the list in the file and returns lines containing
+     * the search term as substring.
      * 
-     * @param remainingCommand
-     *         is the search term or the substring to search for.
-     *         
+     * @param remainingCommand is the search term or the substring to search
+     * for.
+     * 
      * @return the result of the search, or feedback messages, if applicable.
      */
     public String search(String remainingCommand) {
@@ -807,6 +808,26 @@ public class TextBuddy {
         System.out.println();
         System.out.println(text);
         System.out.println();
+    }
+
+    /*** JUnit Accessories ***/
+
+    /*
+     * This operation returns the number of lines present in the text file.
+     * 
+     * @return the number of lines presently stored in the file.
+     */
+    public int getNumOfLines() {
+        int size = -1;
+        try {
+            String[] lines = readFileIntoLines();
+            size = lines.length;
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        return size;
     }
 
 }
