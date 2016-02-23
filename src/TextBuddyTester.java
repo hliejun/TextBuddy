@@ -4,12 +4,14 @@ import org.junit.Before;
 
 /*
  * TextBuddyTester is a JUnit test module that will test TextBuddy.
+ * 
+ * @author Huang Lie Jun (A0123994W)
  */
 public class TextBuddyTester {
 
     private static final String filename = "testfile.txt";
-    private static TextBuddy myBuddy = null;
-
+    public static TextBuddy myBuddy = null;
+    
     /*
      * preprocessTest will construct a TextBuddy and clear the file contents
      * before any of the following tests.
