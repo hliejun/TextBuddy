@@ -5,8 +5,11 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.Collator;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.Scanner;
 
 /**
@@ -75,6 +78,10 @@ public class TextBuddy {
 	private static final String MESSAGE_DELETE_FILE_ERROR = "error deleting from %1$s";
 	private static final String MESSAGE_DELETE_FORMAT_ERROR = "%1$s cannot be parsed as a line number";
 	private static final String MESSAGE_CLEAR_ERROR = "unable to clear contents of %1$s";
+	private static final String MESSAGE_SORT_EMPTY = "there is nothing in %1$s to sort";
+	private static final String MESSAGE_SORT_ERROR = "unable to sort contents of %1$s";
+	private static final String MESSAGE_SEARCH_EMPTY = "search for \"%1$s\" returns no result (search is CASE-SENSITIVE)";
+	private static final String MESSAGE_SEARCH_ERROR = "unable to search contents in %1$s";
 
 	// Temporary file name format
 	private static final String MESSAGE_TEMP_FILE_NAME = "~%1$s.tmp";
@@ -86,6 +93,14 @@ public class TextBuddy {
 	private static final String LINE_BREAK = System
 			.getProperty("line.separator");
 
+	// US Locale
+	private static final Locale LOCALE = Locale.US;
+	
+	private static final int COLLATOR_STRENGTH = Collator.PRIMARY;
+	
+	// Collator for sorting
+	private static final Collator COLLATOR = Collator.getInstance(LOCALE);
+	
 	// These are the possible command types
 	enum COMMAND_TYPE {
 		ADD, DISPLAY, DELETE, CLEAR, SEARCH, SORT, EXIT, INVALID
@@ -337,13 +352,48 @@ public class TextBuddy {
 	}
 
 	private String sort(String remainingCommand) {
-		// TODO Auto-generated method stub
-		return null;
+		try {
+			String[] lines = readFileIntoLines();
+			String feedback = null;
+			
+			// Set feedback for empty files / non-empty files
+			if (lines.length == 0) {
+				feedback = String.format(MESSAGE_SORT_EMPTY, file);
+			} else {
+				COLLATOR.setStrength(COLLATOR_STRENGTH);
+				Arrays.sort(lines, COLLATOR);
+				feedback = collateDisplay(lines);
+			}
+		
+			return feedback;
+		} catch(IOException ioException) {
+			return String.format(MESSAGE_SORT_ERROR, file);
+		}
 	}
 
 	private String search(String remainingCommand) {
-		// TODO Auto-generated method stub
-		return null;
+		try {
+			String[] lines = readFileIntoLines();
+			ArrayList<String> searchResults = new ArrayList<String>();
+			String feedback = null;
+			
+			for (int i = 0; i < lines.length; ++i) {
+				if (lines[i].contains(remainingCommand)) {
+					searchResults.add(lines[i]);
+				}
+			}
+			
+			if (searchResults.size() == 0) {
+				feedback = String.format(MESSAGE_SEARCH_EMPTY, remainingCommand);
+			} else {
+				String[] results = searchResults.toArray(new String[searchResults.size()]);
+				feedback = collateDisplay(results);
+			}
+			
+			return feedback;
+		} catch(IOException ioException) {
+			return String.format(MESSAGE_SEARCH_ERROR, file);
+		}
 	}
 	
 	/**
