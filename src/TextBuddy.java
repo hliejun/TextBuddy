@@ -352,7 +352,7 @@ public class TextBuddy {
      * @return the result of the sorting, or feedback messages if applicable.
      * 
      */
-    private String sort() {
+    public String sort() {
         try {
             String[] lines = readFileIntoLines();
             String feedback = null;
@@ -380,7 +380,7 @@ public class TextBuddy {
      *         
      * @return the result of the search, or feedback messages, if applicable.
      */
-    private String search(String remainingCommand) {
+    public String search(String remainingCommand) {
         try {
             String[] lines = readFileIntoLines();
             ArrayList<String> searchResults = new ArrayList<String>();
