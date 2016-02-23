@@ -678,6 +678,8 @@ public class TextBuddy {
 	}
 
 	/*** Display Handlers ***/
+	
+	/* This operation displays the welcome message to the user. */
 	private void welcomeUser() {
 		String welcomeMessage = String.format(WELCOME_MESSAGE, file);
 		showToUser(welcomeMessage);
