@@ -88,7 +88,7 @@ public class TextBuddy {
 
 	// These are the possible command types
 	enum COMMAND_TYPE {
-		ADD, DISPLAY, DELETE, CLEAR, EXIT, INVALID
+		ADD, DISPLAY, DELETE, CLEAR, SEARCH, SORT, EXIT, INVALID
 	};
 
 	/*
@@ -215,6 +215,14 @@ public class TextBuddy {
 		case CLEAR:
 			return clear();
 			// Fallthrough
+			
+		case SEARCH:
+			return search(remainingCommand);
+			// Fallthrough
+			
+		case SORT:
+			return sort(remainingCommand);
+			// Fallthrough
 
 		case EXIT:
 			exit();
@@ -224,6 +232,7 @@ public class TextBuddy {
 			return UNRECOGNIZED_COMMAND_ERROR;
 		}
 	}
+
 
 	/**
 	 * This operation writes a line to the end of the file used with TextBuddy.
@@ -327,6 +336,16 @@ public class TextBuddy {
 		}
 	}
 
+	private String sort(String remainingCommand) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	private String search(String remainingCommand) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
 	/**
 	 * This operation closes file streams and terminates the application.
 	 */
@@ -514,6 +533,10 @@ public class TextBuddy {
 			return COMMAND_TYPE.DELETE;
 		} else if (commandTypeString.equalsIgnoreCase("clear")) {
 			return COMMAND_TYPE.CLEAR;
+		} else if (commandTypeString.equalsIgnoreCase("search")) {
+			return COMMAND_TYPE.SEARCH;
+		} else if (commandTypeString.equalsIgnoreCase("sort")) {
+			return COMMAND_TYPE.SORT;
 		} else if (commandTypeString.equalsIgnoreCase("exit")) {
 			return COMMAND_TYPE.EXIT;
 		} else {
