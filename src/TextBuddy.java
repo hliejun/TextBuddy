@@ -57,10 +57,11 @@ import java.util.Scanner;
  * @author Huang Lie Jun (A0123994W)
  * 
  * Assumptions:
- * 1) Results of sorting will not be stored into text file
- * 2) Results of searching will not be stored into text file
- * 3) Search is cap-sensitive.
- * 4) Search will return all lines that contain matching substring(s).
+ * 1) Adding of empty string to file is not allowed.
+ * 2) Results of sorting will not be stored into text file.
+ * 3) Results of searching will not be stored into text file.
+ * 4) Search is cap-sensitive.
+ * 5) Search will return all lines that contain matching substring(s).
  * 
  */
 public class TextBuddy {
@@ -79,6 +80,7 @@ public class TextBuddy {
     private static final String MESSAGE_INVALID_COMMAND_FORMAT = "invalid command format: %1$s";
     private static final String UNRECOGNIZED_COMMAND_ERROR = "unrecognized command type";
     private static final String NULL_COMMAND_STRING_ERROR = "command type string cannot be null!";
+    private static final String MESSAGE_ADD_EMPTY_COMMAND = "you may not add an empty string";
     private static final String MESSAGE_DISPLAY_ERROR = "error parsing and displaying %1$s";
     private static final String MESSAGE_DELETE_RANGE_ERROR = "the specified line number %1$d "
             + "exceeds the range of %2$s";
@@ -264,6 +266,9 @@ public class TextBuddy {
      * @return feedback that the string has been added.
      */
     public String add(String remainingCommand) {
+        if (remainingCommand.isEmpty()) {
+            return MESSAGE_ADD_EMPTY_COMMAND;
+        }
         writer.println(remainingCommand);
         writer.flush();
 

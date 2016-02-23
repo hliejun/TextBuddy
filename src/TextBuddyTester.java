@@ -19,10 +19,14 @@ public class TextBuddyTester {
 
         String input1 = "little brown fox";
         String expectedCase1 = "added to %1$s: \"little brown fox\"";
+        
+        String input2 = "";
+        String expectedCase2 = "you may not add an empty string";
 
         expectedCase1 = String.format(expectedCase1, filename);
 
         Assert.assertEquals(expectedCase1, myBuddy.add(input1));
+        Assert.assertEquals(expectedCase2, myBuddy.add(input2));
     }
 
     @Test
@@ -106,27 +110,49 @@ public class TextBuddyTester {
         Assert.assertEquals(sizeAfter, myBuddy.getNumOfLines());
     }
 
-//    @Test
-//    public void testSortUnit() {
-//
-//        String input1 = "little brown fox";
-//        String expectedCase1 = "added to %1$s: \"little brown fox\"";
-//
-//        expectedCase1 = String.format(expectedCase1, filename);
-//
-//        Assert.assertEquals(expectedCase1, myBuddy.add(input1));
-//    }
+    @Test
+    public void testSortUnit() {
 
-//    @Test
-//    public void testSearchUnit() {
-//
+        String content1 = "I let it fall, my heart";
+        String content2 = "And as it fell you rose to claim it";
+        String content3 = "It was dark and I was over";
+        String content4 = "Until you kissed my lips and you saved me";
+        String content5 = "My hands, they're strong";
+        String content6 = "it was dark and I was over";
+
+        
+        String expectedCase1 = "there is nothing in %1$s to sort";
+        expectedCase1 = String.format(expectedCase1, filename);
+
+        String expectedCase2 = "1. And as it fell you rose to claim it\n\n"
+                + "2. I let it fall, my heart\n\n"
+                + "3. It was dark and I was over\n\n"
+                + "4. it was dark and I was over\n\n"
+                + "5. My hands, they're strong\n\n"
+                + "6. Until you kissed my lips and you saved me";        
+        
+        Assert.assertEquals(expectedCase1, myBuddy.sort());
+        
+        myBuddy.add(content1);
+        myBuddy.add(content2);
+        myBuddy.add(content3);
+        myBuddy.add(content4);
+        myBuddy.add(content5);
+        myBuddy.add(content6);
+        
+        Assert.assertEquals(expectedCase2, myBuddy.sort());
+    }
+
+    @Test
+    public void testSearchUnit() {
+
 //        String input1 = "little brown fox";
 //        String expectedCase1 = "added to %1$s: \"little brown fox\"";
 //
 //        expectedCase1 = String.format(expectedCase1, filename);
 //
 //        Assert.assertEquals(expectedCase1, myBuddy.add(input1));
-//    }
+    }
 
     @Test
     public void testMain() {
