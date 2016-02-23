@@ -55,6 +55,13 @@ import java.util.Scanner;
  * command: exit
  *
  * @author Huang Lie Jun (A0123994W)
+ * 
+ * Assumptions:
+ * 1) Results of sorting will not be stored into text file
+ * 2) Results of searching will not be stored into text file
+ * 3) Search is cap-sensitive.
+ * 4) Search will return all lines that contain matching substring(s).
+ * 
  */
 public class TextBuddy {
 
@@ -74,9 +81,9 @@ public class TextBuddy {
     private static final String NULL_COMMAND_STRING_ERROR = "command type string cannot be null!";
     private static final String MESSAGE_DISPLAY_ERROR = "error parsing and displaying %1$s";
     private static final String MESSAGE_DELETE_RANGE_ERROR = "the specified line number %1$d "
-            + "exceeds the number of lines in %2$s";
+            + "exceeds the range of %2$s";
     private static final String MESSAGE_DELETE_FILE_ERROR = "error deleting from %1$s";
-    private static final String MESSAGE_DELETE_FORMAT_ERROR = "%1$s cannot be parsed as a line number";
+    private static final String MESSAGE_DELETE_FORMAT_ERROR = "\"%1$s\" cannot be parsed as a line number";
     private static final String MESSAGE_CLEAR_ERROR = "unable to clear contents of %1$s";
     private static final String MESSAGE_SORT_EMPTY = "there is nothing in %1$s to sort";
     private static final String MESSAGE_SORT_ERROR = "unable to sort contents of %1$s";
@@ -311,7 +318,7 @@ public class TextBuddy {
             String[] lines = readFileIntoLines();
             int lineToDelete = Integer.parseInt(remainingCommand);
 
-            if (lineToDelete > lines.length) {
+            if (lineToDelete > lines.length || lineToDelete < 1) {
                 return String.format(MESSAGE_DELETE_RANGE_ERROR, lineToDelete, file);
             }
 
